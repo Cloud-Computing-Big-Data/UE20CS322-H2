@@ -267,41 +267,6 @@ SET hive.compactor.worker.threads=1;
 
 To support ACID transactions you need to create a table with TBLPROPERTIES (‘transactional’=’true’); and the store type of the table should be ORC.
 
-```bash
-CREATE TABLE table_name (
- col_name data_type)
- STORED AS ORC
- TBLPROPERTIES ('transactional'='true');
-```
-
-Insert Records into the table
-
-```bash
-INSERT INTO table_name VALUES(col_value);
-```
-
-Hive UPDATE SQL query is used to update the existing records in a table.When WHERE clause not used, Hive updates all records in a table.By using WHERE clause you can specify a condition which records to update.
-
-Update statement Syntax:
-
-```bash
-UPDATE tablename 
-SET column = value 
-WHERE expression;
-```
-(The WHERE clause is optional. If you omit the WHERE clause, all records in the table will be updated.)
-
-
-Hive DELETE SQL query is used to delete the records from a table.
-
-Delete statement Syntax:
-
-```bash
-DELETE FROM tablename 
-WHERE expression;
-```
-
-(The WHERE clause is optional. If you omit the WHERE clause, all records in the table will be deleted.)
 
 ### Problem statement:
 
@@ -312,6 +277,15 @@ Create a Table with table name as "costs" and items with the following attribute
 | id            | item ID (primary key)        | int       |
 | item_name     | Item name                    | String    |
 | item_cost     | Item Cost                    | double    |
+
+```bash
+create table costs(
+ id int,
+ item_name String,
+ item_cost double)
+ STORED AS ORC
+ TBLPROPERTIES ('transactional'='true');
+```
 
 Insert the below values into the table items
 
@@ -330,12 +304,43 @@ Insert the below values into the table items
 | 11    | apples          | 90        |
 | 12    | chips           | 20        |
 
+```bash
+insert into costs values
+(1,"chocolate",100)
+(2,"grape",50)
+(3,"chips",10)
+(4,"oranges",80)
+(5,"apples",90)
+(6,"chips",20)
+(7,"chocolate",90)
+(8,"grape",100)
+(9,"chips",40)
+(10,"oranges",70)
+(11,"apples",90)
+(12,"chips",20);
+```
 Update item_cost of chips to 30. **Take a screenshot of the terminal output and name it 4a.png.**
+```bash
+update costs
+set item_cost = 30
+where item_name = "chips"
+```
 
 Delete all the rows with maximum item_cost. **Take a screenshot of the terminal output and name it 4b.png.**
+```bash
+DELETE FROM costs
+WHERE item_cost = (
+  SELECT MAX(item_cost)
+  FROM costs
+);
+```
 
 Write a query to find the total number of each item and check the number of mappers and reducers executed by that query. **Take a screenshot of the terminal output and name it 4c.png.**
-
+```bash
+SELECT item_name, COUNT(*) AS total_items
+FROM costs
+GROUP BY item_name;
+```
 ## TASK 4 - Evaluation
 
 This activity is graded and will be evaluated by two procedures. Both procedures are mandatory to be completed. **Deadline for this activity is 11:59pm on 7th September 2022.**
