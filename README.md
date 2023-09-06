@@ -306,17 +306,17 @@ Insert the below values into the table items
 
 ```bash
 insert into costs values
-(1,"chocolate",100)
-(2,"grape",50)
-(3,"chips",10)
-(4,"oranges",80)
-(5,"apples",90)
-(6,"chips",20)
-(7,"chocolate",90)
-(8,"grape",100)
-(9,"chips",40)
-(10,"oranges",70)
-(11,"apples",90)
+(1,"chocolate",100),
+(2,"grape",50),
+(3,"chips",10),
+(4,"oranges",80),
+(5,"apples",90),
+(6,"chips",20),
+(7,"chocolate",90),
+(8,"grape",100),
+(9,"chips",40),
+(10,"oranges",70),
+(11,"apples",90),
 (12,"chips",20);
 ```
 Update item_cost of chips to 30. **Take a screenshot of the terminal output and name it 4a.png.**
